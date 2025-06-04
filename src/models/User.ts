@@ -1,8 +1,9 @@
-import { Model, Table, Column, DataType } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Role } from './Role';
 
 @Table({
-  tableName: 'users', // Nombre de la tabla en la BD
-  timestamps: true,   // createdAt y updatedAt automáticos
+  tableName: 'users',
+  timestamps: true,
 })
 export class User extends Model {
   @Column({
@@ -32,23 +33,20 @@ export class User extends Model {
   })
   declare password: string;
 
+  @ForeignKey(() => Role)
   @Column({
-    type: DataType.ENUM('admin', 'dentist', 'receptionist'),
-    defaultValue: 'receptionist',
-  })
-  declare role: 'admin' | 'dentist' | 'receptionist';
-
-  @Column({
-    type: DataType.DATE,
+    type: DataType.INTEGER,
     allowNull: false,
-    field: 'created_at',
+    defaultValue: 3,
   })
+  declare roleId: number;
+
+  @BelongsTo(() => Role)
+  declare role: Role;
+
+  @Column(DataType.DATE)
   declare readonly createdAt: Date;
 
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-    field: 'updated_at',
-  })
+  @Column(DataType.DATE)
   declare readonly updatedAt: Date;
 }

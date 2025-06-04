@@ -7,6 +7,7 @@ import { Invoice } from './Invoice';
 import { Product } from './Product';
 import { InventoryMovement } from './InventoryMovement';
 import { Sequelize } from 'sequelize-typescript';
+import { Role } from './Role';
 
 const models = [
   User,
@@ -17,6 +18,7 @@ const models = [
   Invoice,
   Product,
   InventoryMovement,
+  Role,
 ];
 
 export const sequelize = new Sequelize({
@@ -33,6 +35,9 @@ export const sequelize = new Sequelize({
 // Relaciones
 User.hasMany(Appointment, { foreignKey: 'userId' });
 Appointment.belongsTo(User, { foreignKey: 'userId' });
+
+Role.hasMany(User, { foreignKey: 'roleId' });
+User.belongsTo(Role, { foreignKey: 'roleId' });
 
 Patient.hasMany(Appointment, { foreignKey: 'patientId' });
 Appointment.belongsTo(Patient, { foreignKey: 'patientId' });
@@ -55,4 +60,5 @@ export {
   Invoice,
   Product,
   InventoryMovement,
+  Role,
 };
