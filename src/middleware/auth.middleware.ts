@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-export const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
+export const authenticateJWT = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const authHeader = req.headers.authorization;
 
   if (authHeader) {
@@ -22,15 +22,18 @@ export const authenticateJWT = async (req: Request, res: Response, next: NextFun
       const user = await User.findByPk(decoded.id, { include: Role });
 
       if (!user) {
-        return res.status(403).json({ message: 'Acceso denegado - Usuario no encontrado' });
+        res.status(403).json({ message: 'Acceso denegado - Usuario no encontrado' });
+        return;
       }
 
       req.user = user;
       next();
     } catch (err) {
-      return res.status(403).json({ message: 'Token inválido o expirado' });
+      res.status(403).json({ message: 'Token inválido o expirado' });
+      return;
     }
   } else {
-    return res.status(401).json({ message: 'Autenticación requerida' });
+    res.status(401).json({ message: 'Autenticación requerida' });
+    return;
   }
 };
