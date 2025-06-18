@@ -17,10 +17,10 @@ export class MedicalHistory extends Model {
 
   @ForeignKey(() => Patient)
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
     allowNull: false,
   })
-  declare patientId: number;
+  declare patientId: string;
 
   @BelongsTo(() => Patient)
   declare patient: Patient;

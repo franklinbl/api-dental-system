@@ -11,12 +11,12 @@ import { TreatmentRecord } from './TreatmentRecord';
 })
 export class Patient extends Model {
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
     allowNull: false,
   })
-  declare id: number;
+  declare id: string;
 
   @Column({
     type: DataType.STRING,
