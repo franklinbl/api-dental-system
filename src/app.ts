@@ -9,7 +9,6 @@ import { createGenericRoute } from './routes/generic.route';
 import { User } from './models/User';
 import { Patient } from './models/Patient';
 import { Appointment } from './models/Appointment';
-import { Treatment } from './models/Treatment';
 
 const app: Express = express();
 
@@ -18,7 +17,6 @@ const routes = [
   createGenericRoute(User, '/users'),
   createGenericRoute(Patient, '/patients'),
   createGenericRoute(Appointment, '/appointments'),
-  createGenericRoute(Treatment, '/treatments')
 ];
 
 // Middlewares

@@ -1,12 +1,12 @@
-import { Model, Table, Column, DataType, ForeignKey } from 'sequelize-typescript';
+import { Model } from 'sequelize-typescript';
+import { Table, Column, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { Patient } from './Patient';
-import { Treatment } from './Treatment';
 
 @Table({
-  tableName: 'patient_treatments',
+  tableName: 'tooth_records',
   timestamps: true,
 })
-export class PatientTreatment extends Model {
+export class ToothRecord extends Model {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -22,24 +22,41 @@ export class PatientTreatment extends Model {
   })
   declare patientId: number;
 
-  @ForeignKey(() => Treatment)
+  @BelongsTo(() => Patient)
+  declare patient: Patient;
+
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    validate: {
+      min: 1,
+      max: 32,
+    },
   })
-  declare treatmentId: number;
+  declare toothNumber: number; // Número de diente (1-32)
 
   @Column({
-    type: DataType.DATE,
+    type: DataType.ENUM(
+      'healthy',
+      'filled',
+      'caries',
+      'implant',
+      'missing',
+      'prosthetic',
+      'endodontics',
+      'restoration'
+    ),
     allowNull: false,
   })
-  declare startDate: Date;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  declare endDate: Date | null;
+  declare condition:
+    | 'healthy'
+    | 'filled'
+    | 'caries'
+    | 'implant'
+    | 'missing'
+    | 'prosthetic'
+    | 'endodontics'
+    | 'restoration';
 
   @Column({
     type: DataType.TEXT,

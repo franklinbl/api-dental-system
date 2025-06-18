@@ -1,4 +1,9 @@
-import { Model, Table, Column, DataType } from 'sequelize-typescript';
+import { Model } from 'sequelize-typescript';
+import { Table, Column, DataType, HasMany } from 'sequelize-typescript';
+import { MedicalHistory } from './MedicalHistory';
+import { Appointment } from './Appointment';
+import { ToothRecord } from './ToothRecord';
+import { TreatmentRecord } from './TreatmentRecord';
 
 @Table({
   tableName: 'patients',
@@ -50,6 +55,43 @@ export class Patient extends Model {
   })
   declare email: string | null;
 
+  // Datos adicionales
+  @Column({
+    type: DataType.ENUM('male', 'female', 'other'),
+    allowNull: true,
+  })
+  declare gender: 'male' | 'female' | 'other' | null;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare occupation: string | null;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare landlinePhone: string | null;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare legalGuardianName: string | null;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare legalGuardianDni: string | null;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  declare age: number | null;
+
   @Column({
     type: DataType.DATE,
     allowNull: false,
@@ -63,4 +105,16 @@ export class Patient extends Model {
     field: 'updated_at',
   })
   declare readonly updatedAt: Date;
+
+  @HasMany(() => MedicalHistory)
+  declare medicalHistories: MedicalHistory[];
+
+  @HasMany(() => Appointment)
+  declare appointments: Appointment[];
+
+  @HasMany(() => ToothRecord)
+  declare toothRecords: ToothRecord[];
+
+  @HasMany(() => TreatmentRecord)
+  declare treatmentRecords: TreatmentRecord[];
 }

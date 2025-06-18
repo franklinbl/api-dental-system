@@ -1,4 +1,5 @@
-import { Model, Table, Column, DataType } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, HasMany } from 'sequelize-typescript';
+import { User } from './User';
 
 @Table({
   tableName: 'roles',
@@ -22,6 +23,9 @@ export class Role extends Model {
     },
   })
   declare name: 'admin' | 'dentist' | 'receptionist';
+
+  @HasMany(() => User)
+  declare users: User[];
 }
 
 export default Role;

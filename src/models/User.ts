@@ -1,5 +1,6 @@
-import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import { Role } from './Role';
+import { Appointment } from './Appointment';
 
 @Table({
   tableName: 'users',
@@ -43,6 +44,9 @@ export class User extends Model {
 
   @BelongsTo(() => Role)
   declare role: Role;
+
+  @HasMany(() => Appointment)
+  declare appointments: Appointment[];
 
   @Column(DataType.DATE)
   declare readonly createdAt: Date;

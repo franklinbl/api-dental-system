@@ -1,11 +1,12 @@
-import { Model, Table, Column, DataType, ForeignKey } from 'sequelize-typescript';
+import { Model } from 'sequelize-typescript';
+import { Table, Column, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { Patient } from './Patient';
 
 @Table({
-  tableName: 'invoices',
+  tableName: 'treatment_records',
   timestamps: true,
 })
-export class Invoice extends Model {
+export class TreatmentRecord extends Model {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -21,30 +22,32 @@ export class Invoice extends Model {
   })
   declare patientId: number;
 
+  @BelongsTo(() => Patient)
+  declare patient: Patient;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+  })
+  declare date: Date;
+
+  @Column({
+    type: DataType.TEXT,
+    allowNull: false,
+  })
+  declare treatmentDescription: string;
+
   @Column({
     type: DataType.DECIMAL(10, 2),
     allowNull: false,
   })
-  declare total: number;
+  declare amountPaid: number;
 
   @Column({
-    type: DataType.ENUM('pendiente', 'pagado', 'vencido'),
-    defaultValue: 'pendiente',
+    type: DataType.DECIMAL(10, 2),
     allowNull: false,
   })
-  declare paymentStatus: 'pendiente' | 'pagado' | 'vencido';
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-  })
-  declare generatedAt: Date;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  declare paidAt: Date | null;
+  declare remainingBalance: number;
 
   @Column({
     type: DataType.DATE,

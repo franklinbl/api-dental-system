@@ -1,24 +1,20 @@
 import { User } from './User';
 import { Patient } from './Patient';
 import { Appointment } from './Appointment';
-import { Treatment } from './Treatment';
-import { PatientTreatment } from './PatientTreatment';
-import { Invoice } from './Invoice';
-import { Product } from './Product';
-import { InventoryMovement } from './InventoryMovement';
 import { Sequelize } from 'sequelize-typescript';
 import { Role } from './Role';
+import { MedicalHistory } from './MedicalHistory';
+import { ToothRecord } from './ToothRecord';
+import { TreatmentRecord } from './TreatmentRecord';
 
 const models = [
   User,
   Patient,
   Appointment,
-  Treatment,
-  PatientTreatment,
-  Invoice,
-  Product,
-  InventoryMovement,
   Role,
+  MedicalHistory,
+  ToothRecord,
+  TreatmentRecord,
 ];
 
 export const sequelize = new Sequelize({
@@ -42,23 +38,21 @@ User.belongsTo(Role, { foreignKey: 'roleId' });
 Patient.hasMany(Appointment, { foreignKey: 'patientId' });
 Appointment.belongsTo(Patient, { foreignKey: 'patientId' });
 
-Patient.hasMany(PatientTreatment, { foreignKey: 'patientId' });
-PatientTreatment.belongsTo(Patient, { foreignKey: 'patientId' });
+Patient.hasMany(MedicalHistory, { foreignKey: 'patientId' });
+MedicalHistory.belongsTo(Patient, { foreignKey: 'patientId' });
 
-Treatment.hasMany(PatientTreatment, { foreignKey: 'treatmentId' });
-PatientTreatment.belongsTo(Treatment, { foreignKey: 'treatmentId' });
+Patient.hasMany(ToothRecord, { foreignKey: 'patientId' });
+ToothRecord.belongsTo(Patient, { foreignKey: 'patientId' });
 
-Product.hasMany(InventoryMovement, { foreignKey: 'productId' });
-InventoryMovement.belongsTo(Product, { foreignKey: 'productId' });
+Patient.hasMany(TreatmentRecord, { foreignKey: 'patientId' });
+TreatmentRecord.belongsTo(Patient, { foreignKey: 'patientId' });
 
 export {
   User,
   Patient,
   Appointment,
-  Treatment,
-  PatientTreatment,
-  Invoice,
-  Product,
-  InventoryMovement,
   Role,
+  MedicalHistory,
+  ToothRecord,
+  TreatmentRecord,
 };

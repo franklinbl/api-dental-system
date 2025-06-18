@@ -1,4 +1,4 @@
-import { Model, Table, Column, DataType, ForeignKey } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { User } from './User';
 import { Patient } from './Patient';
 
@@ -22,12 +22,18 @@ export class Appointment extends Model {
   })
   declare patientId: number;
 
+  @BelongsTo(() => Patient)
+  declare patient: Patient;
+
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
   declare userId: number;
+
+  @BelongsTo(() => User)
+  declare user: User;
 
   @Column({
     type: DataType.DATE,
