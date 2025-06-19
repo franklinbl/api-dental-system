@@ -9,6 +9,9 @@ import { createGenericRoute } from './routes/generic.route';
 import { User } from './models/User';
 import { Patient } from './models/Patient';
 import { Appointment } from './models/Appointment';
+import { MedicalHistory } from './models/MedicalHistory';
+import { ToothRecord } from './models/ToothRecord';
+import { TreatmentRecord } from './models/TreatmentRecord';
 
 const app: Express = express();
 
@@ -16,6 +19,9 @@ const app: Express = express();
 const routes = [
   createGenericRoute(User, '/users'),
   createGenericRoute(Patient, '/patients'),
+  createGenericRoute(MedicalHistory, '/medical-histories'),
+  createGenericRoute(ToothRecord, '/tooth-records'),
+  createGenericRoute(TreatmentRecord, '/treatment-records'),
   createGenericRoute(Appointment, '/appointments'),
 ];
 
