@@ -1,5 +1,5 @@
 import { Model } from 'sequelize-typescript';
-import { Table, Column, DataType, HasMany } from 'sequelize-typescript';
+import { Table, Column, DataType, HasMany, HasOne } from 'sequelize-typescript';
 import { MedicalHistory } from './MedicalHistory';
 import { Appointment } from './Appointment';
 import { ToothRecord } from './ToothRecord';
@@ -106,8 +106,8 @@ export class Patient extends Model {
   })
   declare readonly updatedAt: Date;
 
-  @HasMany(() => MedicalHistory)
-  declare medicalHistories: MedicalHistory[];
+  @HasOne(() => MedicalHistory)
+  declare medicalHistories: MedicalHistory;
 
   @HasMany(() => Appointment)
   declare appointments: Appointment[];
