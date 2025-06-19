@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import medicalHistoryRoutes from './routes/medicalHistory.routes';
+import treatmentRecordRoutes from './routes/treatmentRecord.routes';
 import { createGenericRoute } from './routes/generic.route';
 
 // Modelos
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/medical-histories', medicalHistoryRoutes);
+app.use('/api/treatment-records', treatmentRecordRoutes);
 // Register generic routes
 routes.forEach(({ router, path }) => {
   app.use(`/api${path}`, router);
