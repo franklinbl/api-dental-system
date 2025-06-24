@@ -1,4 +1,4 @@
-import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo, BeforeUpdate, BeforeCreate } from 'sequelize-typescript';
 import { User } from './User';
 import { Patient } from './Patient';
 
@@ -68,5 +68,19 @@ export class Appointment extends Model {
   })
   declare readonly updatedAt: Date;
 
-  // Relaciones (opcional, pero recomendado definirlas en index.ts o al inicializar)
+  // Hook para validar que el usuario sea dentista
+  @BeforeCreate
+  @BeforeUpdate
+  static async validateUserIsDentist(instance: Appointment) {
+    const user = await instance.$get('user');
+
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    if (user.roleId !== 2) {
+      // Asume que el rol "dentist" tiene roleId = 2
+      throw new Error('El usuario asociado debe ser un dentista');
+    }
+  }
 }
