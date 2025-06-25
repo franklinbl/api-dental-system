@@ -36,6 +36,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/medical-histories', medicalHistoryRoutes);
 app.use('/api/treatment-records', treatmentRecordRoutes);
+app.use('/api/users', userRoutes);
 // Register generic routes
 routes.forEach(({ router, path }) => {
   app.use(`/api${path}`, router);

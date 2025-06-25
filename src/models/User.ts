@@ -34,6 +34,25 @@ export class User extends Model {
   })
   declare password: string;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare dni: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare phone: string;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  })
+  declare isActive: boolean;
+
   @ForeignKey(() => Role)
   @Column({
     type: DataType.INTEGER,
