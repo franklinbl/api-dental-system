@@ -14,6 +14,7 @@ import { Appointment } from './models/Appointment';
 import { MedicalHistory } from './models/MedicalHistory';
 import { ToothRecord } from './models/ToothRecord';
 import { TreatmentRecord } from './models/TreatmentRecord';
+import patientRoutes from './routes/patient.routes';
 
 const app: Express = express();
 
@@ -34,9 +35,9 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/patients', patientRoutes);
 app.use('/api/medical-histories', medicalHistoryRoutes);
 app.use('/api/treatment-records', treatmentRecordRoutes);
-app.use('/api/users', userRoutes);
 // Register generic routes
 routes.forEach(({ router, path }) => {
   app.use(`/api${path}`, router);
